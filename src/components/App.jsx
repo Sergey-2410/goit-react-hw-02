@@ -3,15 +3,21 @@ import '../index.css';
 import Description from './Description/Description';
 import Feedback from './Feedback/Feedback';
 import Options from './Options/Options';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Notification from './Notification/Notification';
 
 const App = () => {
-  const [reviews, setReviews] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [reviews, setReviews] = useState(() => {
+    const savedReviews = window.localStorage.getItem('reviews');
+    return savedReviews
+      ? JSON.parse(savedReviews)
+      : { good: 0, neutral: 0, bad: 0 };
   });
+
+  useEffect(() => {
+    window.localStorage.setItem('reviews', JSON.stringify(reviews));
+  }, [reviews]);
+
   const updateFeedback = feedbackType => {
     setReviews(prev => ({ ...prev, [feedbackType]: prev[feedbackType] + 1 }));
   };
