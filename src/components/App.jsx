@@ -29,9 +29,7 @@ const App = () => {
     });
   };
   const totalFeedback = reviews.good + reviews.neutral + reviews.bad;
-  const positiveFeedback = Math.round(
-    (reviews.good / (reviews.good + reviews.bad)) * 100
-  );
+  const positiveFeedback = Math.round((reviews.good / totalFeedback) * 100);
 
   return (
     <div>
